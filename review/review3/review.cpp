@@ -3,10 +3,9 @@
 
 void ReadStdIn2() {
     int count = 0;
-    std::string line;
+    std::string s1;
 
-    while (std::getline(std::cin, line) && line != "q") {
-        std::cout << line << std::endl;
+    while (std::cin >> s1 && s1 != "q") {
         count++;
     }
 
