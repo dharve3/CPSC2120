@@ -3,5 +3,6 @@
 using namespace std;
 
 int main() {
-    
+    ReadStdIn();
+    return 0;
 }

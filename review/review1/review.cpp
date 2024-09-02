@@ -1,8 +1,14 @@
 #include "review.h"
-
-using namespace std;
+#include <iostream>
 
 void ReadStdIn() {
-    string s1, s2, s3;
-    cin >> s1 >> s2 >> s3;
+    int i1;
+    double d1;
+    std::string s1;
+
+    std::cin >> i1 >> d1 >> s1;
+
+    std::cout << i1 << std::endl;
+    std::cout << d1 << std::endl;
+    std::cout << s1 << std::endl;
 }
