@@ -1,8 +1,8 @@
 /*
- * Name:
- * Date Submitted:
- * Lab Section:
- * Assignment Name:
+ * Name: Dylan Harvey
+ * Date Submitted: 
+ * Lab Section: 005
+ * Assignment Name: Lab 1: Linked List Based Stacks and Queues
  */
 
 #pragma once
