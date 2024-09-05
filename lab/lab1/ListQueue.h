@@ -41,28 +41,33 @@ class ListQueue{
 //Construct an empty ListQueue by initializing this ListQueue's instance variables
 template <class T>
 ListQueue<T>::ListQueue(){
+  // Done by List Constructor
 }
 
 //Destroy all nodes in this ListQueue to prevent memory leaks
 template <class T>
 ListQueue<T>::~ListQueue(){
+  // Done by List Destructor
 }
 
 //Return the size of this ListQueue
 template <class T>
 int ListQueue<T>::size(){
+  return queue.size();
 }
 
 //Return true if this ListQueue is empty
 //Otherwise, return false
 template <class T>
 bool ListQueue<T>::empty(){
+  return (queue.size() == 0);
 }
 
 //Create a new node with value, and insert that new node
 //into this ListQueue in its correct position
 template <class T>
 void ListQueue<T>::enqueue(T value){
+  queue.insertEnd(value);
 }
 
 //Dequeue an element from the queue.
@@ -70,4 +75,7 @@ void ListQueue<T>::enqueue(T value){
 //AND returning the value
 template <class T>
 T ListQueue<T>::dequeue(){
+  T value = queue.getFirst();
+  queue.removeStart();
+  return value;
 }

@@ -41,27 +41,32 @@ class ListStack{
 //Construct an empty ListStack by initializing this ListStack's instance variables
 template <class T>
 ListStack<T>::ListStack(){
+  // Isn't this done by the List constructor?
 }
 
 //Destroy all nodes in this ListStack to prevent memory leaks
 template <class T>
 ListStack<T>::~ListStack(){
+  // Same deal; List destructor
 }
 
 //Return the size of this ListStack
 template <class T>
 int ListStack<T>::size(){
+  return stack.size();
 }
 
 //Return true if this ListStack is empty
 //Otherwise, return false
 template <class T>
 bool ListStack<T>::empty(){
+  return (stack.size() == 0);
 }
 
 //Create a node with value <value> and push it onto the stack
 template <class T>
 void ListStack<T>::push(T value){
+  stack.insertStart(value);
 }
 
 //Pop a node from the Stack.
@@ -69,4 +74,7 @@ void ListStack<T>::push(T value){
 //AND returning its value.
 template <class T>
 T ListStack<T>::pop(){
+  T value = stack.getFirst();
+  stack.removeStart();
+  return value;
 }
