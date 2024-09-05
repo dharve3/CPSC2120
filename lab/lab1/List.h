@@ -202,13 +202,13 @@ void List<T>::removeAt(int j){
 
   Node<T> * current = start; // Iterator set to start
 
-  for (int i = 0; i < j; i++) {
-    current = current->next; // position j
+  for (int i = 0; i < j - 1; i++) {
+    current = current->next; // position j - 1
   }
 
   Node<T> * temp = current->next; // store next value
-  delete current;
-  current = temp;
+  current->next = temp->next;
+  delete temp;
 
   mySize--; // Decrement Size
 }
