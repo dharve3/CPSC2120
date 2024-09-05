@@ -118,7 +118,7 @@ void List<T>::insertEnd(T value){
 //Create a new node with value <value>, and insert that new node at position j
 template <class T>
 void List<T>::insertAt(T value, int j){
-  if (j < 0 || j > mySize) {
+  if (j < 0 || j >= mySize) {
     return; // Invalid size, do nothing
   }
 
@@ -186,7 +186,7 @@ void List<T>::removeEnd(){
 //Make no other changes to list
 template <class T>
 void List<T>::removeAt(int j){
-  if (j < 0 || j > mySize) { // Invalid pos, do nothing
+  if (j < 0 || j >= mySize) { // Invalid pos, do nothing
     return;
   }
 
