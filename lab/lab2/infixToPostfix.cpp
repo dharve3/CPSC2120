@@ -33,16 +33,24 @@ using namespace std;
 //The function is not specified to work with any other operator symbols
 //Any string in infix may be assumed to be an integer operand if none
 // of the above symbols
-int infixToPostfix(string infix[], int length, string postfix[])
-{
+int infixToPostfix(string infix[], int length, string postfix[]) {
+    stack<string> operators;
+    int len = 0;
 
+    for (int i = 0; i < length; i++) {
+        if (isdigit(infix[i][0])) {
+            cout << "DEBUG: " << infix[i] << " is digit!" << endl;
+            
+            len++;
+        }
+    }
+    return len;
 }
 
 //Main function to test infixToPostfix()
 //Should convert 2 + 3 * 4 + ( 5 - 6 + 7 ) * 8
 //            to 2 3 4 * + 5 6 - 7 + 8 * +
-int main()
-{
+int main() {
     string infixExp[] = {"2", "+", "3", "*", "4", "+", "(",
                          "5", "-", "6", "+", "7", ")", "*",
                          "8"};
@@ -50,8 +58,7 @@ int main()
     int postfixLength;
 
     cout << "Infix expression: ";
-    for (int i=0; i<15; i++)
-    {
+    for (int i=0; i<15; i++) {
         cout << infixExp[i] << " ";
     }
     cout << endl;
@@ -60,8 +67,7 @@ int main()
     postfixLength = infixToPostfix(infixExp, 15, postfixExp);
 
     cout << "Postfix expression: ";
-    for (int i=0; i<postfixLength; i++)
-    {
+    for (int i=0; i<postfixLength; i++) {
         cout << postfixExp[i] << " ";
     }
     cout << endl;
