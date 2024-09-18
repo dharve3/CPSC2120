@@ -11,6 +11,13 @@
 
 using namespace std;
 
+// Helper function for operator precedence
+int precedence(const string &op) {
+    if (op == "+" || op == "-") return 1;
+    if (op == "*" || op == "/" || op == "%") return 2;
+    return 0; // For non-operators or parentheses
+}
+
 //Converts an infix arithmetic expression into postfix
 //The function takes 3 parameters
 //First parameter: array of strings for infix expression
@@ -35,16 +42,44 @@ using namespace std;
 // of the above symbols
 int infixToPostfix(string infix[], int length, string postfix[]) {
     stack<string> operators;
-    int len = 0;
+    int postfixIndex = 0;
 
     for (int i = 0; i < length; i++) {
-        if (isdigit(infix[i][0])) {
-            cout << "DEBUG: " << infix[i] << " is digit!" << endl;
-            
-            len++;
+        string token = infix[i];
+
+        if (isdigit(token[0])) { // If operand (number)
+            postfix[postfixIndex++] = token; // Add number to postfix output
+        } else if (token == "(") {
+            operators.push(token); // Push '(' to the stack of operators
+        } else if (token == ")") {
+            // Pop from stack until ')' is found
+            while (!operators.empty() && operators.top() != "(") {
+                postfix[postfixIndex++] = operators.top();
+                operators.pop();
+            }
+            if (operators.empty()) {
+                return 0; // Mismatched parentheses
+            }
+            operators.pop(); // Pop the '('
+        } else {
+            while (!operators.empty() && precedence(operators.top()) >= precedence(token)) {
+                postfix[postfixIndex++] = operators.top();
+                operators.pop();
+            }
+            operators.push(token); // Push current operator to the stack
         }
     }
-    return len;
+    
+    // Pop all remaining operators from the stack
+    while (!operators.empty()) {
+        if (operators.top() == "(") {
+            return 0; // Mismatched parentheses
+        }
+        postfix[postfixIndex++] = operators.top();
+        operators.pop();
+    }
+
+    return postfixIndex; // Return the number of tokens in postdix (length)
 }
 
 //Main function to test infixToPostfix()
