@@ -85,6 +85,9 @@ int infixToPostfix(string infix[], int length, string postfix[]) {
 //Main function to test infixToPostfix()
 //Should convert 2 + 3 * 4 + ( 5 - 6 + 7 ) * 8
 //            to 2 3 4 * + 5 6 - 7 + 8 * +
+
+// COMMENTED OUT MAIN FOR TESTS/AUTOGRADER
+/*
 int main() {
     string infixExp[] = {"2", "+", "3", "*", "4", "+", "(",
                          "5", "-", "6", "+", "7", ")", "*",
@@ -110,3 +113,4 @@ int main() {
     
     return 0;
 }
+*/
