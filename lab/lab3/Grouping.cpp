@@ -63,7 +63,7 @@ ostream& operator<< (ostream& os, const GridSquare obj)
 Grouping::Grouping() : grid{},groups() {} //Default constructor, no groups
 
 Grouping::Grouping(string fileName) { // Implemented Constructor to read file
-    cout << "DEBUG: fileName: " << fileName << endl;
+    // cout << "DEBUG: fileName: " << fileName << endl;
     ifstream infile(fileName); // Open file
     if (!infile.is_open()) {
         cerr << "Error opening file!" << endl;
@@ -76,19 +76,19 @@ Grouping::Grouping(string fileName) { // Implemented Constructor to read file
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
             infile >> input;
-            cout << "DEBUG: " << input << endl;
+            // cout << "DEBUG: " << input << endl;
             num = (input == 'X') ? 1 : 0;
             grid[i][j] = num;
         }
     }
 
     // TEST TO PRINT
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j++) {
-            cout << grid[i][j] << " ";
-        }
-        cout << endl;
-    }
+    // for (int i = 0; i < 10; i++) {
+    //     for (int j = 0; j < 10; j++) {
+    //         cout << grid[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
 }
 
 void Grouping::findGroup(int r, int c) { // Implemented recursive method
