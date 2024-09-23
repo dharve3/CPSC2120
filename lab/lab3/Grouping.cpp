@@ -70,14 +70,14 @@ Grouping::Grouping(string fileName) { // Implemented Constructor to read file
         exit(1);
     }
 
-    string input;
+    char input;
     int num;
 
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
             infile >> input;
-            // cout << "DEBUG: " << input << endl;
-            num = (input == "X") ? 1 : 0;
+            cout << "DEBUG: " << input << endl;
+            num = (input == 'X') ? 1 : 0;
             grid[i][j] = num;
         }
     }
