@@ -1,6 +1,6 @@
 /*
  * Name: Dylan Harvey
- * Date Submitted: 9/--/2024
+ * Date Submitted: 9/18/2024
  * Lab Section: 005
  * Assignment Name: Lab 2: Infix to Postfix Conversion
  */
