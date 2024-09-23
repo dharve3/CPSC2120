@@ -1,8 +1,8 @@
 /*
- * Name:
- * Date Submitted:
- * Lab Section:
- * Assignment Name:
+ * Name: Dylan Harvey
+ * Date Submitted: 9/--/2024
+ * Lab Section: 005
+ * Assignment Name: Lab 3: Finding Groups Using Recursion
  */
 
 #pragma once
@@ -10,6 +10,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <string>
 
 using namespace std;
 

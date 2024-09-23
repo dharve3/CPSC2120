@@ -1,15 +1,11 @@
 /*
- * Name:
- * Date Submitted:
- * Lab Section:
- * Assignment Name:
+ * Name: Dylan Harvey
+ * Date Submitted: 9/--/2024
+ * Lab Section: 005
+ * Assignment Name: Lab 3: Finding Groups Using Recursion
  */
 
 #include "Grouping.h"
-
-#include <iostream>
-#include <fstream>
-#include <vector>
 
 using namespace std;
 
@@ -65,6 +61,39 @@ ostream& operator<< (ostream& os, const GridSquare obj)
 }
 
 Grouping::Grouping() : grid{},groups() {} //Default constructor, no groups
+
+Grouping::Grouping(string fileName) { // Implemented Constructor to read file
+    cout << "DEBUG: fileName: " << fileName << endl;
+    ifstream infile(fileName); // Open file
+    if (!infile.is_open()) {
+        cerr << "Error opening file!" << endl;
+        exit(1);
+    }
+
+    string input;
+    int num;
+
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            infile >> input;
+            // cout << "DEBUG: " << input << endl;
+            num = (input == "X") ? 1 : 0;
+            grid[i][j] = num;
+        }
+    }
+
+    // TEST TO PRINT
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            cout << grid[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+void Grouping::findGroup(int r, int c) { // Implemented recursive method
+
+}
 
 void Grouping::printGroups() //Displays grid's groups of squares
 {
