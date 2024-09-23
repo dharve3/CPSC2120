@@ -2,13 +2,19 @@
 
 // Implement the following function:
 // p and afterp are pointers to the nodes to be swapped.
-void swapWithNext(Node * p)
-{
+void swapWithNext(Node * p) {
+    int temp;
+    temp = p->next->value; // store the value of next
+    if (p->next != nullptr) {
+        p->next->value = p->value; // set next to the current value
+        p->value = temp; // set the current value to what next was
+    } else {
+        return;
+    }
 }
 
 //Be sure to comment out the main() function when submitting to codePost
-int main()
-{
+int main() {
     int array[] = {1, 3, 6, 10, 15, 21, 28, 36, 45, 55};
     Node * head = arrayToList(array, 10);
     printForwards(head);
