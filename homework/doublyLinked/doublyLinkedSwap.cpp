@@ -3,14 +3,26 @@
 // Implement the following function:
 // p and afterp are pointers to the nodes to be swapped.
 void swapWithNext(Node * p) {
-    int temp;
-    temp = p->next->value; // store the value of next
-    if (p->next != nullptr) {
-        p->next->value = p->value; // set next to the current value
-        p->value = temp; // set the current value to what next was
-    } else {
+    if (p == nullptr || p->next == nullptr || p->prev == nullptr || p->next->next == nullptr) {
+        // Either dummy nodes or list is too small/full
         return;
     }
+
+    Node * afterp = p->next;
+    Node * beforep = p->prev;
+    Node * afterAfterp = afterp->next;
+
+    // Adjust the surrounding nodes
+    if (beforep != nullptr) {
+        beforep->next = afterp;
+    }
+    afterAfterp->prev = p;
+
+    // Adjust the values
+    p->next = afterAfterp;
+    p->prev = afterp;
+    afterp->next = p;
+    afterp->prev = beforep;
 }
 
 //Be sure to comment out the main() function when submitting to codePost
