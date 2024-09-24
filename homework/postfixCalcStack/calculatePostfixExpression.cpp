@@ -52,6 +52,7 @@ int calculatePostfixExpression(string expression[], int length) {
             operandStack.pop();
 
             // Preform the operation
+            // Was considering making a helper function map this, but i think for the scope of this assignment this is fine
             if (input == operators[0]) { // +
                 operandStack.push(leftOperand + rightOperand);
             } else if (input == operators[1]) { // -
