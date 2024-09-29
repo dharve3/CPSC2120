@@ -14,13 +14,13 @@ using namespace std;
 
 //Simple main function to test Grouping
 //Be sure to comment out main() before submitting
-int main()
-{
-    Grouping input1("input1.txt");
-    input1.printGroups();
+// int main()
+// {
+//     Grouping input1("input1.txt");
+//     input1.printGroups();
     
-    return 0;
-}
+//     return 0;
+// }
 
 //Do not modify anything below
 
