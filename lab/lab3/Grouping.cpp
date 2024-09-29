@@ -12,10 +12,6 @@ using namespace std;
 //Implement the (parameterized) constructor and findGroup functions below
 
 
-
-
-
-
 //Simple main function to test Grouping
 //Be sure to comment out main() before submitting
 int main()
@@ -82,17 +78,33 @@ Grouping::Grouping(string fileName) { // Implemented Constructor to read file
         }
     }
 
-    // TEST TO PRINT
-    // for (int i = 0; i < 10; i++) {
-    //     for (int j = 0; j < 10; j++) {
-    //         cout << grid[i][j] << " ";
-    //     }
-    //     cout << endl;
-    // }
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            if (grid[i][j] == 1) {  // If the square is occupied
+                vector<GridSquare> newGroup;
+                findGroup(i, j, newGroup);  // Group this square and its neighbors
+                groups.push_back(newGroup);  // Add the new group to the list of groups
+            }
+        }
+    }
 }
 
-void Grouping::findGroup(int r, int c) { // Implemented recursive method
+void Grouping::findGroup(int r, int c, vector<GridSquare> &currentGroup) { // Implemented recursive method
+    // Base case, out of bounds or empty
+    if (r < 0 || r >= 10 || c < 0 || c >= 10 || grid[r][c] == 0)
+        return;
 
+    // Mark as visited
+    grid[r][c] = 0;
+
+    // Add the current square to the current group
+    currentGroup.push_back(GridSquare(r, c));
+
+    // Check all 4 directions
+    findGroup(r-1, c, currentGroup); // up
+    findGroup(r+1, c, currentGroup); // down
+    findGroup(r, c-1, currentGroup); // left
+    findGroup(r, c+1, currentGroup); // right
 }
 
 void Grouping::printGroups() //Displays grid's groups of squares
