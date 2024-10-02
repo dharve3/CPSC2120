@@ -1,6 +1,6 @@
 /*
  * Name: Dylan Harvey
- * Date Submitted: 10/--/2024
+ * Date Submitted: 10/02/2024
  * Lab Section: 005
  * Assignment Name: Lab 4: Searching and Sorting
  */
