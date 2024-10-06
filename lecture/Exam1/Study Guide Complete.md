@@ -584,7 +584,144 @@ When analyzing the run-time complexity of a code fragment, the goal is to expres
 ***Note: Labs also help a lot here, so look there for your specific examples!***
 1. Binary Search
    - Binary search is an efficient algorithm for finding a target value within a sorted array. It works by repeatedly dividing the search interval in half, comparing the target value to the middle element.
+   - Steps:
+     1. Start with two pointers, low and high, which represent the current search range.
+     2. Compute the middle index (mid) of the array.
+     3. Compare the middle element with the target:
+        - If the middle element is the target, return its index.
+        - If the target is smaller, search in the left half (`low` to `mid - 1`).
+        - If the target is larger, search in the right half (`mid + 1` to `high`).
+     4. Repeat until the target is found or the search range is empty.
+   - Time Complexity:
+     - Best case: `Ω(1)` - Target is found at the middle on the first comparison
+     - Worst/Average case: `O(log n)` - Halving the search space each time
+   - Implementation:
+   ```cpp
+   int binarySearch(int arr[], int low, int high, int target) {
+       if (low <= high) {
+           int mid = low + (high - low) / 2;  // Find the middle index
+ 
+           // Check if the target is at the mid index
+           if (arr[mid] == target)
+               return mid;
+           
+           // If target is smaller, search in the left half
+           if (arr[mid] > target)
+               return binarySearch(arr, low, mid - 1, target);
+ 
+           // If target is larger, search in the right half
+           return binarySearch(arr, mid + 1, high, target);
+       }
+       
+       // Return -1 if the target is not found
+       return -1;
+   }
+   ```
 2. Merge Sort
    - Merge sort is a classic example of the divide-and-conquer strategy. It recursively divides the array into two halves, sorts them, and then merges the sorted halves.
+   - Steps:
+     1. Divide the array into two halves.
+     2. Recursively sort the left half and the right half.
+     3. Merge the two sorted halves into one sorted array.
+   - Time Complexity:
+     - Best/Worst/Average case: `Θ(n log n)` (because each level of recursion does `O(n)` merging, there are `log n` levels).
+   - Space Complexity:
+     - Space complexity: `O(n)` (because of the auxiliary array used for merging).
+   - Implementation:
+   ```cpp
+   void merge(int arr[], int left, int mid, int right) {
+       int n1 = mid - left + 1;
+       int n2 = right - mid;
+       
+       // Create temp arrays
+       int L[n1], R[n2];
+       
+       // Copy data to temp arrays L[] and R[]
+       for (int i = 0; i < n1; i++)
+           L[i] = arr[left + i];
+       for (int j = 0; j < n2; j++)
+           R[j] = arr[mid + 1 + j];
+       
+       // Merge the temp arrays back into arr[left..right]
+       int i = 0, j = 0, k = left;
+       while (i < n1 && j < n2) {
+           if (L[i] <= R[j]) {
+               arr[k] = L[i];
+               i++;
+           } else {
+               arr[k] = R[j];
+               j++;
+           }
+           k++;
+       }
+       
+       // Copy the remaining elements of L[], if any
+       while (i < n1) {
+           arr[k] = L[i];
+           i++;
+           k++;
+       }
+
+       // Copy the remaining elements of R[], if any
+       while (j < n2) {
+           arr[k] = R[j];
+           j++;
+           k++;
+       }
+   }
+
+   void mergeSort(int arr[], int left, int right) {
+       if (left < right) {
+           int mid = left + (right - left) / 2;
+           
+           // Recursively sort the first and second halves
+           mergeSort(arr, left, mid);
+           mergeSort(arr, mid + 1, right);
+           
+           // Merge the two halves
+           merge(arr, left, mid, right);
+       }
+   }
+   ```
 3. Quicksort
    - Quicksort is another divide-and-conquer sorting algorithm, which works by selecting a "pivot" element and partitioning the array so that elements smaller than the pivot go to the left, and elements greater than the pivot go to the right. It then recursively sorts the left and right partitions.
+   - Steps: 
+     1. Choose a pivot element (can be any element, but typically the last element).
+     2. Partition the array into two subarrays: elements less than the pivot and elements greater than the pivot.
+     3. Recursively apply quicksort to the subarrays.
+   - Time Complexity:
+     - Best/Average case: `Θ(n log n)` (when the pivot divides the array evenly).
+     - Worst case: `O(n^2)` (when the pivot divides the array poorly, e.g., when the array is already sorted and the pivot is always the smallest or largest element).
+   - Space Complexity:
+     - Space complexity: `O(log n)` for recursive stack space, but in the worst case (if not optimized), it could be `O(n)`.
+   - Implementation:
+   ```cpp
+   int partition(int arr[], int low, int high) {
+       int pivot = arr[high];  // Choose the last element as the pivot
+       int i = low - 1;  // Index of smaller element
+       
+       for (int j = low; j <= high - 1; j++) {
+           // If the current element is smaller than or equal to the pivot
+           if (arr[j] <= pivot) {
+               i++;
+               // Swap arr[i] and arr[j]
+               std::swap(arr[i], arr[j]);
+           }
+       }
+       
+       // Swap the pivot element with the element at i+1
+       std::swap(arr[i + 1], arr[high]);
+       return (i + 1);
+   }
+
+   void quickSort(int arr[], int low, int high) {
+       if (low < high) {
+           // Partition the array and get the pivot index
+           int pi = partition(arr, low, high);
+           
+           // Recursively sort elements before and after the partition
+           quickSort(arr, low, pi - 1);
+           quickSort(arr, pi + 1, high);
+       }
+   }
+   ```
