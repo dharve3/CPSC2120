@@ -1,4 +1,16 @@
-# Study Guide for Exam 1
+# Study Guide for Exam 1 <!-- omit in toc -->
+
+
+## Table of Contents <!-- omit in toc -->
+1. [Programming Review/Concepts](#be-able-to-briefly-define-describe-or-use-the-following-programming-concepts)
+2. [Data Structures/Implementation](#be-able-to-describe-implement-or-use-the-following-data-structures)
+3. [Big-O, Big-Ω, and Θ Notation](#be-able-to-describe-the-asymptotic-order-of-mathematical-functions-using-big-o-big-ω-and-θ-notation)
+4. [Run-time order of code](#be-able-to-determine-the-run-time-order-of-a-fragment-of-code-or-function-containing-nested-andor-sequential-loops-with-or-without-recursion)
+5. [Best-case, Worst-case, Average-case, and Amortized](#understand-best-case-vs-worst-case-vs-average-case-typical-single-case-vs-amortized-on-a-sequence-of-operations-including-average-and-worst-case-analysis)
+6. [Algorithms, Operation, and Properties](#understand-how-the-following-algorithms-operate-in-general-and-their-properties-timespace-complexity-bestworstaverage-case-stable-vs-unstable-sort-etc)
+7. [Properties of Sorting Algorithms](#understand-the-properties-of-sorting-algorithms)
+8. [Binary Search, Merge Sort, and Quicksort Implementation](#be-able-to-implement-the-divide-and-conquer-algorithms-discussed-binary-search-merge-sort-and-quicksort)
+9. [Addendum: Key Differences Between Merge Sort and Quicksort](#addendum-key-differences-between-merge-sort-and-quicksort)
 
 ## Be able to briefly define, describe, or use the following programming concepts:
 1. Recursion
