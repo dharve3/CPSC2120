@@ -725,3 +725,6 @@ When analyzing the run-time complexity of a code fragment, the goal is to expres
        }
    }
    ```
+## Addendum: Key Differences between Merge Sort and Quicksort:
+- Merge Sort is stable and has a worst-case time complexity of `O(n log n)` but requires `O(n)` additional space.
+- Quicksort is faster in practice due to lower constant factors and is in-place, but it has a worst-case time complexity of `O(n^2)`, although this is rare with good pivot selection.
