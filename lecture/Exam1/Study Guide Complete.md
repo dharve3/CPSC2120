@@ -340,82 +340,251 @@
      - Time complexity: O(1) for enqueue, dequeue, and front operations
 
 ## Be able to describe the asymptotic order of mathematical functions using big-O, big-Ω and Θ notation
-- Asymptotic notation provides a way to describe the performance of algorithms in terms of their input size n, focusing on how they behave as n approaches infinity. There are three common types of asymptotic notation:
+Asymptotic notation provides a way to describe the performance of algorithms in terms of their input size n, focusing on how they behave as n approaches infinity. There are three common types of asymptotic notation:
 1. Big-O `O(n)`
-   - Describes an upper bound on the time complexity of an algorithm. It gives the worst-case scenario — the longest time it might take for an algorithm to complete as a function of the input size.
+   - Describes an upper bound on the time complexity of an algorithm. It gives the **worst-case** scenario — the longest time it might take for an algorithm to complete as a function of the input size.
      - Formal Definition: A function `f(n)` is in `O(g(n))` if there exists constants `c > 0` and `n0 >= 0` such that for all `n >= n0`, `f(n) <= c*g(n)`.
      - Example: If an algorithm has a time complexity of `f(n) = 5n + 3`, its Big-O is `O(n)` because for sufficently large n, the linear term n dominates.
 2. big-Ω `Ω(n)`
-   - Describes a lower bound on the time complexity of an algorithm, representing the best-case scenario — the shortest time the algorithm might take.
-     - Formal Definition: 
-     - Example: 
+   - Describes a lower bound on the time complexity of an algorithm, representing the **best-case** scenario — the shortest time the algorithm might take.
+     - Formal Definition: A function `f(n)` is in `Ω(g(n))` if there exists constants `c > 0` and `n0 >= 0` such that for all `n >= n0`, `f(n) >= c*g(n)`.
+     - Example: If an algorithm always requires at least n steps, we say it has a lower bound of `Ω(n)`.
 3. Θ `Θ(n)`
-   - Describes a tight bound, meaning both an upper and lower bound, on the time complexity of an algorithm. It is used when the algorithm's time complexity is both `O(g(n))` and `Ω(g(n))`
-     - Formal Definition: 
-     - Example: 
+   - Describes a tight bound, meaning both an upper and lower bound, on the time complexity of an algorithm, representing the **average-case** scenario. It is used when the algorithm's time complexity is both `O(g(n))` and `Ω(g(n))`
+     - Formal Definition: A function `f(n)` is in `Θ(g(n))` if there exists constants `c1 >0`, `c2 > 0`, and `n0 >= 0` such that for all `n >= n0`, `c1*g(n) <= f(n) <= c2*g(n)`.
+     - Example: If an algorithm's time complexity is `f(n) = 3n + 2`, its Θ notation is `Θ(n)`, becasue the function grows linearly for large n.
 
 ## Be able to determine the run-time order of a fragment of code or function containing nested and/or sequential loops with or without recursion
-   4. Analyze loops and recursion for time complexity. Nested loops multiply their complexity, sequential loops sum up.
-   5. Example: Two nested loops → `O(n^2)`.
+When analyzing the run-time complexity of a code fragment, the goal is to express the number of operations as a function of the input size n. Here are key strategies:
+1. Sequential Code:
+   - The time complexity of a sequence of independent statements is the time complexity of the most significant (largest) statement.
+   - Example:
+   ```cpp
+   int sum = 0;                    // O(1)
+   for (int i = 0; i < n; i++) {   // O(n)
+       sum += i;
+   }
+   ```
+   - In this case, the loop dominates, so the time complexity is `O(n)`.
+2. Nested Loops:
+   - The time complexity of nested loops is the product of the sizes in each loop.
+   - Example:
+   ```cpp
+   for (int i = 0; i < n; i++) {      // O(n)
+       for (int j = 0; j < n; j++) {  // O(n)
+           // O(1) operation
+       }
+   }
+   ```
+   - This code has two loops, each iterating n times, so the time complexity is `O(n^2)`.
+3. Recursion:
+   - For recursive functions, use a recurrence relation to express the time complexity. 
+   - For example, the time complexity of the following recursive function:
+   ```cpp
+   int fib(int n) {
+       if (n <= 1) {
+           return n;       // O(1)
+       } else {
+           return fib(n-1) + fib(n-2);   // O(2^n)
+       }
+   }
+   ```
+   - The recurrence relation is `T(n) = T(n-1) + T(n-2) + O(1)`, and its solution is `O(2^n)`.
+4. Divide and Conquer Algorithms:
+   - For divide-and-conquer algorithms like mergesort or quicksort, the time complexity can be analyzed using recurrence relations like the Master Theorem.
 
 ## Understand best-case vs. worst-case vs. average-case (typical single case) vs. amortized (on a sequence of operations including average and worst-case) analysis
-   6. Best-case: The minimal time complexity.
-   7. Worst-case: The maximal time complexity.
-   8. Average-case: The expected time complexity for random inputs.
-   9. Amortized: Average time per operation over a sequence of operations.
+1. Best-case:
+   - This describes the minimum time an algorithm can take for the most favorable input. Best-case analysis helps in understanding how an algorithm performs in optimal situations.
+   - Example: Example: In a sorted array, a linear search might find the element on the first comparison, giving `O(1)` time complexity.
+2. Worst-case: The maximal time complexity.
+   - This describes the maximum time an algorithm can take for the least favorable input. It is the most common form of analysis since it provides an upper bound on the running time.
+   - Example: In an unsorted array, the worst-case time complexity for linear search is `O(n)` if the element is at the last position or not present at all.
+3. Average-case: The expected time complexity for random inputs.
+   - This describes the expected time an algorithm will take over all possible inputs, assuming all inputs are equally likely. It requires calculating the average running time based on different input distributions.
+   - Example: The average case for linear search is `O(n/2)`, which simplifies to `O(n)`.
+4. Amortized: Average time per operation over a sequence of operations.
+   - This type of analysis considers the total cost of a sequence of operations over time and averages it out. It is often used when occasional costly operations happen, but most operations are cheap. The amortized cost per operation becomes low even if an individual operation can be expensive.
+   - Example: Consider a dynamic array (like a vector). The push_back operation takes `O(1)` most of the time, but when the array needs to resize, it takes `O(n)`. Over a large number of operations, the amortized time complexity is still `O(1)` because the costly resize happens only occasionally.
 
 ## Understand how the following algorithms operate (in general) and their properties (time/space complexity, best/worst/average case, stable vs. unstable sort, etc.)
-   10. Linear/Sequential Search
-      - Scans each element until it finds the target or reaches the end.
-      - Time Complexity: `O(n)`.
-   11. Binary Search
-      - Requires a sorted array. Divides the array in half and eliminates one half each time.
-      - Time Complexity: `O(log n)`.
-   12. Seleciton Sort
-      - Repeatedly finds the minimum element and moves it to the sorted portion.
-      - Time Complexity: `O(n^2)`.
-   13. Insertion Sort
-      - Builds the sorted array one element at a time by inserting elements into the correct position.
-      - Time Complexity: `O(n^2)`, best case: `O(n)`.
-   14. Bubble Sort
-      - Repeatedly swaps adjacent elements if they are in the wrong order.
-      - Time Complexity: `O(n^2)`.
-   15. Shell Sort
-      - A generalized version of insertion sort that allows elements to be moved farther apart.
-      - Time Complexity: Depends on gap sequence.
-   16. Merge Sort
-      - A divide-and-conquer algorithm that splits the array, sorts each half, and merges them.
-      - Time Complexity`: O(n log n)`.
-   17. Quicksort
-      - A divide-and-conquer algorithm that selects a pivot, partitions the array, and recursively sorts the partitions.
-      - Time Complexity: Best/Avg: `O(n log n)`, Worst: `O(n^2)`.
-   18. Heapsort
-       - Builds a max heap and repeatedly extracts the largest element.
-       - Time Complexity: `O(n log n)`.
-   19. Bucket Sort
-       - Distributes elements into buckets and sorts each bucket individually.
-       - Time Complexity: Best: `O(n + k)`.
-   20. Counting Sort
-       - Counts the occurrence of each element and builds the output array.
-       - Time Complexity: `O(n + k)`.
-   21. Radix Sort
-       - Sorts numbers digit by digit using a stable sorting algorithm (like counting sort).
-       - Time Complexity: `O(nk)`.
+1. Linear/Sequential Search
+   - Operation: Iterate through the array sequentially, comparing each element to the target.
+   - Time Complexity:
+     - Best case: `Ω(1)` - Target is found at the first position.
+     - Worst case: `O(n)` - Target is found at the last position or not at all.
+     - Average case: `Θ(n)` - Target is found in the middle on average.
+   - Space Complexity: `O(1)` - Requires constant space.
+   - In-place: Yes
+   - Stable: N/A / Yes
+   - Adaptive: No
+2. Binary Search
+   - Operation: Works only on sorted arrays. Repeatedly divide the search interval in half, comparing the middle element with the target.
+   - Time Complexity:
+     - Best case: `Ω(1)` - Middle element is target
+     - Worst case: `O(log n)` - Dividing array by half each time
+     - Average case: `Θ(log n)`
+   - Space Complexity: `O(1)` iterative, `O(log n)` recursive (call stack).
+   - In-place: Yes
+   - Stable: N/A / Yes
+   - Adaptive: No
+3. Selection Sort
+   - Operation: Repeatedly selects the minimum (or maximum) element and places it in the correct position.
+   - Time Complexity:
+     - Best case: `Ω(n^2)` - Always requires `n(n-1)/2` comparisons.
+     - Worst case: `O(n^2)`
+     - Average case: `Θ(n^2)`
+   - Space Complexity: `O(1)`
+   - In-place: Yes
+   - Stable: NO - Says yes in the slides?? Swaps adjacent elements, so this is false.
+   - Adaptive: No
+4. Insertion Sort
+   - Operation: Build the sorted array one element at a time, inserting each new element in its correct position.
+   - Time Complexity:
+     - Best case: `Ω(n)` - If already sorted
+     - Worst case: `O(n^2)`
+     - Average case: `Θ(n^2)`
+   - Space Complexity: `O(1)`
+   - In-place: Yes
+   - Stable: Yes
+   - Adaptive: Yes - Efficent for nearly sorted arrays
+5. Bubble Sort
+   - Operation: Repeatedly swap adjacent elements if they are in the wrong order. Bubble the largest unsorted element to the end of the array.
+   - Time Complexity:
+     - Best case: `Ω(n)`
+     - Worst case: `O(n^2)`
+     - Average case: `Θ(n^2)`
+   - Space Complexity: `O(1)`
+   - In-place: Yes
+   - Stable: Yes
+   - Adaptive: Yes - Optimizations like early stopping
+6. Shell Sort
+   - Operation: Generalization of insertion sort that starts by sorting elements far apart and gradually reduces the gap between compared elements.
+   - Time Complexity:
+     - Best case: `Ω(n log n)`
+     - Worst case: `O(n^2)` - Worst case gap size; `O(n (log n)^2)` - Best case gap size
+     - Average case: `Θ(n^(3/2))` - Most common gap size; `Θ(n (log n)^2)` - Best case gap size
+   - Space Complexity: `O(1)` gap size
+   - In-place: Yes
+   - Stable: No
+   - Adaptive: Yes
+7. Merge Sort
+   - Operation: Divide the array into halves, recursively sort them, and then merge the sorted halves.
+   - Time Complexity:
+     - Best case: `Ω(n log n)`
+     - Worst case: `O(n log n)`
+     - Average case: `Θ(n log n)`
+   - Space Complexity: `O(n)` - Due to storage needed for merging
+   - In-place: No
+   - Stable: Yes
+   - Adaptive: No
+8. Quicksort
+   - Operation: Select a pivot, partition the array into two halves based on the pivot, and recursively sort the two halves.
+   - Time Complexity:
+     - Best case: `Ω(n log n)` - Balanced paritioning
+     - Worst case: `O(n^2)` - If the pivot is always the smallest or largest element
+     - Average case: `Θ(n log n)`
+   - Space Complexity: `O(log n)` - Avg for recursive call stack
+   - In-place: Yes
+   - Stable: No
+   - Adaptive: No
+9. Heapsort
+   - Operation: Convert the array into a max-heap, and repeatedly extract the largest element, restoring the heap property after each extraction.
+   - Time Complexity:
+     - Best case: `Ω(n log n)`
+     - Worst case: `O(n log n)`
+     - Average case: `Θ(n log n)`
+   - Space Complexity: `O(1)`
+   - In-place: Yes
+   - Stable: No
+   - Adaptive: No
+10. Bucket Sort
+    - Operation: Distribute elements into buckets, sort each bucket (using a different sorting algorithm, often insertion sort), and then concatenate the buckets.
+    - Time Complexity:
+      - Best case: `Ω(n + k)` - K is the number of buckets
+      - Worst case: `O(n^2)` - If all elements end up in one bucket and another sort is used
+      - Average case: `Θ(n + k)`
+    - Space Complexity: `O(n)`
+    - In-place: No
+    - Stable: Yes
+    - Adaptive: No
+11. Counting Sort
+    - Operation: Count the occurrences of each unique element and use the counts to place elements in the correct position in the output array.
+    - Time Complexity:
+      - Best case: `Ω(n + k)`
+      - Worst case: `O(n + k)`
+      - Average case: `Θ(n + k)`
+    - Space Complexity: `O(k)`
+    - In-place: No
+    - Stable: Yes
+    - Adaptive: No
+12. Radix Sort
+    - Operation: Sort numbers digit by digit starting from the least significant digit, using a stable sort (like counting sort) at each digit level.
+    - Time Complexity:
+      - Best case: `Ω(n * k)`
+      - Worst case: `O(n * k)`
+      - Average case: `Θ(n * k)`
+    - Space Complexity: `O(k)`
+    - In-place: No
+    - Stable: Yes
+    - Adaptive: No
 
 ## Understand the properties of sorting algorithms:
-    22. Best/Worst/Average Case
-    23. Stable vs. Unstable
-        - A stable sort maintains the relative order of equal elements.
-    24. In-place vs. Out-of-place
-        - In-place sorts use constant extra space, while out-of-place sorts need additional memory.
-    25. Adaptive (Best-case < Average-case)
-        - Some algorithms perform faster when the input is already partially sorted.
-    26. Iterative vs. Recursive
-        - Whether the algorithm uses loops or recursion to sort.
-    27. Stepwise Refinement / Incremental Construction / Divide and Conquer
-    28. Deterministic vs. Randomized
-        - Deterministic algorithms follow a fixed sequence of steps, while randomized algorithms make decisions based on random choices.
-    29. Comparison (only compares key vs. key in data) vs. Non-Comparison Sorting
-    30. Simplicity of Implementation / Analysis
+1. Best/Worst/Average Case
+   - Best Case: Describes the minimum time an algorithm takes to complete. This happens when the input data is in an optimal state (e.g., already sorted for insertion sort).
+     - Example: Insertion Sort has a best-case time complexity of `Ω(n)` when the input is already sorted.
+   - Worst Case: Describes the maximum time the algorithm will take, usually in the least favorable conditions (e.g., reverse sorted data).
+     - Example: Quicksort has a worst-case time complexity of `O(n^2)` when the pivot is poorly chosen.
+   - Average Case: Describes the time complexity for a typical, random input.
+     - Example: Merge Sort consistently has `Θ(n log n)` average case.
+2. Stable vs. Unstable
+   - Stable Sorting: A sorting algorithm is stable if it maintains the relative order of elements with equal keys (i.e., elements that compare equal stay in their original order).
+     - Example: Stable: Merge Sort, Insertion Sort
+     - Unstable: Quicksort, Heapsort
+   - Why it matters: Stability is important when the order of other attributes is significant, especially when sorting multi-field records.
+3. In-place vs. Out-of-place
+   - In-place Sorting: A sorting algorithm is in-place if it requires only a constant amount of extra memory (i.e., `O(1)` auxiliary space).
+     - Example: In-place: Quicksort, Heapsort
+     - Out-of-place: Merge Sort (uses `O(n)` additional space for merging)
+   - Why it matters: In-place sorting is important when memory is constrained.
+4. Adaptive (Best-case < Average-case)
+   - Adaptive Sorting: A sorting algorithm is adaptive if its time complexity improves when the input data has some specific properties (e.g., partially sorted data).
+     - Example: Insertion Sort is adaptive, as it runs in `O(n)` for an already sorted array.
+     - Non-Adaptive: Algorithms like Quicksort or Merge Sort do not improve in the best case and have the same complexity for all input scenarios.
+5. Iterative vs. Recursive
+   - Iterative: The algorithm uses loops to repeatedly process the data.
+     - Example: Selection Sort, Insertion Sort are iterative.
+   - Recursive: The algorithm uses recursive calls to divide the problem into smaller subproblems.
+     - Example: Merge Sort, Quicksort use recursive approaches.
+   - Why it matters: Recursive algorithms can have higher space requirements due to recursion stacks, but they can be easier to conceptualize for divide-and-conquer approaches.
+6. Stepwise Refinement / Incremental Construction / Divide and Conquer
+   - Stepwise Refinement: This involves solving a problem by breaking it into smaller steps and gradually refining the solution.
+     - Example: Insertion Sort builds the sorted array step-by-step by placing each new element in its correct position.
+   - Divide and Conquer: Divides the input into smaller subproblems, solves each subproblem, and then combines the results.
+     - Example: Merge Sort and Quicksort follow this strategy by breaking the array into smaller sections, sorting them, and merging or combining them.
+   - Incremental Construction: Constructs the solution by adding elements one by one.
+     - Example: Shell Sort uses incremental steps to refine the array before applying insertion sort.
+7. Deterministic vs. Randomized
+   - Deterministic Sorting: The behavior of the sorting algorithm is fully determined by the input; it always follows the same sequence of steps for a given input.
+     - Example: Merge Sort, Heapsort, and Insertion Sort are deterministic.
+   - Randomized Sorting: These algorithms introduce randomness into the process, and the exact sequence of steps might vary even with the same input.
+     - Example: Randomized Quicksort randomly selects the pivot, which helps avoid worst-case scenarios.
+8. Comparison (only compares key vs. key in data) vs. Non-Comparison Sorting
+   - Comparison Sorting: These algorithms make decisions based on comparing keys. The minimum time complexity for comparison-based sorting is `O(n log n)` due to the information-theoretic lower bound.
+     - Example: Merge Sort, Quicksort, Heapsort are comparison sorts.
+   - Non-Comparison Sorting: These algorithms do not rely on comparisons between elements but instead use other properties of the data (like digit values).
+     - Example: Counting Sort, Radix Sort, Bucket Sort.
+   - Why it matters: Non-comparison sorts can achieve linear time complexity (`O(n)`) under certain conditions (e.g., small range of input values), but they usually require additional space.
+9. Simplicity of Implementation / Analysis
+   - Simple to Implement: Algorithms like Insertion Sort or Selection Sort are generally easier to implement and understand, making them useful for small datasets or educational purposes.
+   - Complex to Implement: Algorithms like Merge Sort and Quicksort, though efficient, require more complex logic, particularly for dividing and merging or partitioning data.
+   - Simplicity in Analysis: Simple algorithms often have straightforward time and space complexity, while complex algorithms like Quicksort or Heapsort require deeper analysis due to recursive structure or partition strategies.
 
 ## Be able to implement the divide-and-conquer algorithms discussed: binary search, merge sort, and quicksort.
+***Note: Labs also help a lot here, so look there for your specific examples!***
+1. Binary Search
+   - Binary search is an efficient algorithm for finding a target value within a sorted array. It works by repeatedly dividing the search interval in half, comparing the target value to the middle element.
+2. Merge Sort
+   - Merge sort is a classic example of the divide-and-conquer strategy. It recursively divides the array into two halves, sorts them, and then merges the sorted halves.
+3. Quicksort
+   - Quicksort is another divide-and-conquer sorting algorithm, which works by selecting a "pivot" element and partitioning the array so that elements smaller than the pivot go to the left, and elements greater than the pivot go to the right. It then recursively sorts the left and right partitions.
