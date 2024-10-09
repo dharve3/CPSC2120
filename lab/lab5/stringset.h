@@ -1,8 +1,8 @@
 /*
- * Name:
- * Date Submitted:
- * Lab Section:
- * Assignment Name:
+ * Name: Dylan Harvey
+ * Date Submitted: 10/--/2024
+ * Lab Section: 005
+ * Assignment Name: Lab 5: Spell Checker Using a Hash Table
  */
 
 #pragma once
@@ -13,8 +13,7 @@
 using namespace std;
 
 //Stringset class, do not modify definitions for existing members
-class Stringset
-{
+class Stringset {
     private:
         vector<list<string>> table;
         int num_elems;
