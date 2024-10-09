@@ -43,7 +43,7 @@ void Stringset::insert(string word) {
     table[hashValue].push_back(word);
     num_elems++;
 
-    // Check for resizing
+    // Check for resizing - PUT IN HELPER FUNC?
     if (num_elems == size) {
         int newSize = size * 2;
         vector<list<string>> newTable(newSize);
