@@ -78,9 +78,42 @@ void testStringset(Stringset& words) {
 }
 
 void loadStringset(Stringset& words, string filename) {
-    //Implement this function
+    ifstream file(filename);
+    string word;
+
+    // Check if file opened successfully
+    if (!file.is_open()) {
+        cerr << "Error: Could not open file " << filename << endl;
+        return;
+    }
+
+    // Read each word from the file and insert into the Stringset
+    while (file >> word) {
+        words.insert(word);
+    }
+
+    file.close();
 }
 
 vector<string> spellcheck(const Stringset& words, string word) {
-    //Implement this function
+    vector<string> alternatives;
+    string alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+    // For each character in the word, try replacing with every other letter
+    for (int i = 0; i < word.length(); i++) {
+        char original = word[i];
+        for (char c : alphabet) {
+            if (c != original) {
+                string new_word = word;
+                new_word[i] = c;
+
+                // Check if the new word exists in the Stringset
+                if (words.find(new_word)) {
+                    alternatives.push_back(new_word);
+                }
+            }
+        }
+    }
+
+    return alternatives;
 }
