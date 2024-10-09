@@ -30,7 +30,7 @@ void Stringset::insert(string word) {
     // Decided against this implementataion since this hashes the word twice per insert operation
 
     // Get the hash value for the word
-    unsigned int hashValue = hash<string>{}(word) % size;
+    size_t hashValue = hash<string>{}(word) % size;
 
     // Check if the word already exists in the linked list at table[hashValue]
     for (const string& s : table[hashValue]) {
@@ -51,7 +51,7 @@ void Stringset::insert(string word) {
         // Rehash all existing words into the new table
         for (int i = 0; i < size; i++) {
             for (const string& s : table[i]) {
-                unsigned int newHashValue = hash<string>{}(s) % newSize;
+                size_t newHashValue = hash<string>{}(s) % newSize;
                 newTable[newHashValue].push_back(s);
             }
         }
@@ -66,7 +66,7 @@ void Stringset::insert(string word) {
 
 bool Stringset::find(string word) const {
     // Get the hash value for the word
-    unsigned int hashValue = hash<string>{}(word) % size;
+    size_t hashValue = hash<string>{}(word) % size;
 
     // Check the linked list at table[hashValue] for the word
     for (const string &s : table[hashValue]) {
@@ -80,7 +80,7 @@ bool Stringset::find(string word) const {
 
 void Stringset::remove(string word) {
     // Get the hash value for the word
-    unsigned int hashValue = hash<string>{}(word) % size;
+    size_t hashValue = hash<string>{}(word) % size;
 
     // Find and remove the word from the linked list at table[hashValue]
     for (auto it = table[hashValue].begin(); it != table[hashValue].end(); ++it) {
