@@ -1,6 +1,6 @@
 /*
  * Name: Dylan Harvey
- * Date Submitted: 10/--/2024
+ * Date Submitted: 10/16/2024
  * Lab Section: 005
  * Assignment Name: Lab 5: Spell Checker Using a Hash Table
  */

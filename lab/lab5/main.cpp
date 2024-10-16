@@ -1,6 +1,6 @@
 /*
  * Name: Dylan Harvey
- * Date Submitted: 10/--/2024
+ * Date Submitted: 10/16/2024
  * Lab Section: 005
  * Assignment Name: Lab 5: Spell Checker Using a Hash Table
  */
@@ -13,11 +13,11 @@ void testStringset(Stringset& words);
 void loadStringset(Stringset& words, string filename);
 vector<string> spellcheck(const Stringset& words, string word);
 
-int main() {
-    Stringset wordlist;
-    testStringset(wordlist);
-    return 0;
-}
+// int main() {
+//     Stringset wordlist;
+//     testStringset(wordlist);
+//     return 0;
+// }
 
 void testStringset(Stringset& words) {
     string choice;
