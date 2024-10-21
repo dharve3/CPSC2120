@@ -1,8 +1,8 @@
 /*
- * Name:
- * Date Submitted:
- * Lab Section:
- * Assignment Name:
+ * Name: Dylan Harvey
+ * Date Submitted: 10/--/2024
+ * Lab Section: 005
+ * Assignment Name: Lab 6: Finding the Closest Pair of Points
  */
 
 #include <iostream>
@@ -19,6 +19,12 @@ struct point
     double y;
 };
 
+// Helper function to calculate the distance between two points
+// May condense into closestPair at some point
+auto calcDistance(const point& a, const point& b) {
+    return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+}
+
 /*Implement the following function
   Reads in a file specified by the parameter
   Format of file: #of points on first line
@@ -30,7 +36,32 @@ struct point
   and find the distance between the closest pair of points which will be
   returned as a double type value
 */
-double closestPair(string filename);
+double closestPair(string filename) {
+    ifstream file(filename);
+    if (!file) {
+        cerr << "Unable to open file: " << filename << endl;
+        return -1;
+    }
+
+    int n;
+    file >> n; // Number of points
+
+    // Calculate b (using sqrt of n)
+    int b = static_cast<int>(sqrt(n));
+
+    vector<vector<vector<point>>> grid(b, vector<vector<point>>(b)); // VECTOR OHYEAH
+
+    for (int i = 0; i < n; ++i) {
+        point p;
+        file >> p.x >> p.y;
+        int cellX = static_cast<int>(p.x * b);
+        int cellY = static_cast<int>(p.y * b);
+        grid[cellX][cellY].push_back(p);
+    }
+
+    file.close();
+
+}
 
 int main()
 {
