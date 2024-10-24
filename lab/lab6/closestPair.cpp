@@ -13,8 +13,8 @@
 #include <limits>
 
 #define DEBUG 0 // NOTE: Will slow down output considerably, DO NOT USE FOR LARGE DATASETS!!!
-#define PRINT_GRID 1
-#define VISUAL_GRID 1
+#define PRINT_GRID 0
+#define VISUAL_GRID 0
 
 using namespace std;
 
@@ -49,8 +49,11 @@ void visualizeGrid(const vector<vector<vector<point>>>& grid, int numPoints) {
     int b = grid.size();
     cout << "Visual repersentation of the grid (each cell shows number of points):" << endl;
 
-    // Determine density thresholds based on input size
-    int maxPointsPerCell = numPoints;
+    // Determine density thresholds
+    // TODO: Figure out best scaling algorithm for this!
+    // Note: x/sqrt(x) = sqrt(x)
+    // sqrt(x) = b (but b is rounded normally)
+    double maxPointsPerCell = static_cast<double>(sqrt(numPoints));
     cout << "DEBUG: maxPointsPerCell = " << maxPointsPerCell << endl;
 
     int lowThreshold = static_cast<int>(maxPointsPerCell * 0.25);
@@ -169,7 +172,7 @@ double closestPair(string filename) {
     return minDistance;
 }
 
-
+/*
 int main()
 {
     double min;
@@ -181,3 +184,4 @@ int main()
     cout << "Distance between closest pair of points: " << min << endl;
     return 0;
 }
+*/
