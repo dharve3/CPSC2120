@@ -45,25 +45,35 @@ void printGrid(const vector<vector<vector<point>>>& grid) {
     }
 }
 
-void visualizeGrid(const vector<vector<vector<point>>>& grid) {
+void visualizeGrid(const vector<vector<vector<point>>>& grid, int numPoints) {
     int b = grid.size();
     cout << "Visual repersentation of the grid (each cell shows number of points):" << endl;
+
+    // Determine density thresholds based on input size
+    int maxPointsPerCell = numPoints;
+    cout << "DEBUG: maxPointsPerCell = " << maxPointsPerCell << endl;
+
+    int lowThreshold = static_cast<int>(maxPointsPerCell * 0.25);
+    int midThreshold = static_cast<int>(maxPointsPerCell * 0.50);
+    int highThreshold = static_cast<int>(maxPointsPerCell * 0.75);
 
     // Go through each cell and print its "density" (number of points in it)
     for (int i = 0; i < b; i++) {
         for (int j = 0; j < b; j++) {
-            int numPoints = grid[i][j].size();
+            int numPointsInCell = grid[i][j].size();
 
             // Choose a char based on the number of points in the cell
             char representation;
-            if (numPoints == 0) {
+            if (numPointsInCell == 0) {
                 representation = '.'; // Empty cell
-            } else if (numPoints < 3) {
+            } else if (numPointsInCell < lowThreshold) {
                 representation = 'o'; // Few points
-            } else if (numPoints < 6) {
+            } else if (numPointsInCell < midThreshold) {
                 representation = 'O'; // Some points
-            } else {
+            } else if (numPointsInCell < highThreshold) {
                 representation = '#'; // Many points
+            } else {
+                representation = '@'; // VERY FULL CELL
             }
 
             cout << representation << " ";
@@ -93,11 +103,11 @@ double closestPair(string filename) {
 
     int n;
     file >> n; // Number of points
-    if (DEBUG) cout << "Number of points: " << n << endl;
+    if (DEBUG) cout << "DEBUG: Number of points: " << n << endl;
 
     // Calculate b (using sqrt of n)
     int b = static_cast<int>(sqrt(n));
-    if (DEBUG) cout << "Grid size (b x b): " << b << "x" << b << endl;
+    if (DEBUG) cout << "DEBUG: Grid size (b x b): " << b << "x" << b << endl;
 
     // 2D Vector of size b x b (triple vector)
     vector<vector<vector<point>>> grid(b, vector<vector<point>>(b));
@@ -110,13 +120,13 @@ double closestPair(string filename) {
         int cellY = static_cast<int>(p.y * b);
         grid[cellX][cellY].push_back(p);
 
-        if (DEBUG) cout << "Point " << i + 1 << ": (" << p.x << ", " << p.y << ") placed in cell (" << cellX << ", " << cellY << ")" << endl;
+        if (DEBUG) cout << "DEBUG: Point " << i + 1 << ": (" << p.x << ", " << p.y << ") placed in cell (" << cellX << ", " << cellY << ")" << endl;
     }
 
     file.close();
 
     if (PRINT_GRID) printGrid(grid);
-    if (VISUAL_GRID) visualizeGrid(grid);
+    if (VISUAL_GRID) visualizeGrid(grid, n);
 
     // Start the min distance at infinity so it can only go down from here
     double minDistance = numeric_limits<double>::infinity();
@@ -140,12 +150,12 @@ double closestPair(string filename) {
                             if (&p1 == &p2) continue; // Don't compare same point
                             double dist = calcDistance(p1, p2);
 
-                            if (DEBUG) cout << "Comparing Point (" << p1.x << ", " << p1.y << ") with Point (" << p2.x << ", " << p2.y << "), Distance: " << dist << endl;
+                            if (DEBUG) cout << "DEBUG: Comparing Point (" << p1.x << ", " << p1.y << ") with Point (" << p2.x << ", " << p2.y << "), Distance: " << dist << endl;
 
                             if (dist < minDistance) {
                                 minDistance = dist;
 
-                                if (DEBUG) cout << "New minimum distance found: " << minDistance << endl;
+                                if (DEBUG) cout << "DEBUG: New minimum distance found: " << minDistance << endl;
                             }
                         }
                     }
@@ -154,7 +164,7 @@ double closestPair(string filename) {
         }
     }
 
-    if (DEBUG) cout << "Final minimum distance: " << minDistance << endl;
+    if (DEBUG) cout << "DEBUG: Final minimum distance: " << minDistance << endl;
 
     return minDistance;
 }
