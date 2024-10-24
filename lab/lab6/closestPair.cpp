@@ -1,6 +1,6 @@
 /*
  * Name: Dylan Harvey
- * Date Submitted: 10/--/2024
+ * Date Submitted: 10/24/2024
  * Lab Section: 005
  * Assignment Name: Lab 6: Finding the Closest Pair of Points
  */
@@ -76,7 +76,7 @@ double closestPair(string filename) {
                     for (int dy = -1; dy <= 1; dy++) {
                         int ni = i + dx;
                         int nj = j + dy;
-                        
+
                         // Skip out of bounds cells
                         if (ni < 0 || ni >= b || nj < 0 || nj >= b) continue;
 
@@ -99,14 +99,14 @@ double closestPair(string filename) {
     return minDistance;
 }
 
-int main()
-{
-    double min;
-    string filename;
-    cout << "File with list of points within unit square: ";
-    cin >> filename;
-    min = closestPair(filename);
-    cout << setprecision(16);
-    cout << "Distance between closest pair of points: " << min << endl;
-    return 0;
-}
+// int main()
+// {
+//     double min;
+//     string filename;
+//     cout << "File with list of points within unit square: ";
+//     cin >> filename;
+//     min = closestPair(filename);
+//     cout << setprecision(16);
+//     cout << "Distance between closest pair of points: " << min << endl;
+//     return 0;
+// }
