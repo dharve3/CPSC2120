@@ -49,8 +49,10 @@ double closestPair(string filename) {
     // Calculate b (using sqrt of n)
     int b = static_cast<int>(sqrt(n));
 
-    vector<vector<vector<point>>> grid(b, vector<vector<point>>(b)); // VECTOR OHYEAH
+    // 2D Vector of size b x b (triple vector)
+    vector<vector<vector<point>>> grid(b, vector<vector<point>>(b));
 
+    // Read the points into the grid
     for (int i = 0; i < n; ++i) {
         point p;
         file >> p.x >> p.y;
@@ -61,6 +63,40 @@ double closestPair(string filename) {
 
     file.close();
 
+    // Start the min distance at infinity so it can only go down from here
+    double minDistance = numeric_limits<double>::infinity();
+
+    // Iterate through each cell in the grid
+    for (int i = 0; i < b; i++) {
+        for (int j = 0; j < b; j++) {
+            // Check current and specific neighboring cells
+            for (const point& p1 : grid[i][j]) {
+                // Only check neighboring cells in a certain order to avoid redundant checks
+                for (int dx = -1; dx <= 1; dx++) {
+                    for (int dy = -1; dy <= 1; dy++) {
+                        int ni = i + dx;
+                        int nj = j + dy;
+                        
+                        // Skip out of bounds cells
+                        if (ni < 0 || ni >= b || nj < 0 || nj >= b) continue;
+
+                        // Compare with all points in neighboring cell
+                        for (const point& p2 :  grid[ni][nj]) {
+                            if (&p1 == &p2) continue; // Don't compare same point
+                            double dist = calcDistance(p1, p2);
+
+                            if (dist < minDistance) {
+                                minDistance = dist;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    return minDistance;
 }
 
 int main()
