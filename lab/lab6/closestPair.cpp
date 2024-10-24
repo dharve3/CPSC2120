@@ -12,7 +12,8 @@
 #include <cmath>
 #include <limits>
 
-#define DEBUG 0 // NOTE: Will slow down output considerably, DO NOT USE FOR LARGE DATASETS!!!
+// NOTE: Will slow down output considerably, NOT RECCOMENDED FOR LARGE DATASETS!!!
+#define DEBUG 0 
 #define PRINT_GRID 0
 #define NUMBER_GRID 1
 #define VISUAL_GRID 1
@@ -29,6 +30,17 @@ struct point
 // May condense into closestPair at some point
 auto calcDistance(const point& a, const point& b) {
     return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+}
+
+// Helper function to determine the number of digits in an int
+int numDigits(int number) {
+    int digits = 0;
+    do {
+        digits++;
+        number /= 10;
+    } while (number != 0);
+
+    return digits;
 }
 
 // Function to print the entire grid as text
@@ -51,13 +63,27 @@ void numericGrid(const vector<vector<vector<point>>>& grid) {
     int b = grid.size();
     cout << "Numerical representation of the grid (each cell shows number of points):" << endl;
 
+    // Find the max number of points to determine the width
+    int maxPoint = 0;
+    for (int i = 0; i < b; i++) {
+        for (int j = 0; j < b; j++) {
+            int numPointsInCell = grid[i][j].size();
+            if (numPointsInCell > maxPoint) {
+                maxPoint = numPointsInCell;
+            }
+        }
+    }
+
+    int width = numDigits(maxPoint);
+    if (DEBUG) cout << "DEBUG: width: " << width << ", maxPoint: " << maxPoint << endl;
+
     // Iterate through each cell and print the number of points in the cell
     for (int i = 0; i < b; i++) {
         for (int j = 0; j < b; j++) {
             int numPointsInCell = grid[i][j].size();
 
             // Print the number of points in the current cell, using setw for consistent spacing
-            cout << setw(1) << numPointsInCell << " ";
+            cout << setw(width) << numPointsInCell << " ";
         }
         cout << endl; // Newline for each row
     }
@@ -74,7 +100,7 @@ void visualizeGrid(const vector<vector<vector<point>>>& grid, int numPoints) {
     // Note: x/sqrt(x) = sqrt(x)
     // sqrt(x) = b (but b is rounded normally)
     double maxPointsPerCell = static_cast<double>(sqrt(numPoints));
-    cout << "DEBUG: maxPointsPerCell = " << maxPointsPerCell << endl;
+    if (DEBUG) cout << "DEBUG: maxPointsPerCell = " << maxPointsPerCell << endl;
 
     int lowThreshold = static_cast<int>(maxPointsPerCell * 0.25);
     int midThreshold = static_cast<int>(maxPointsPerCell * 0.50);
