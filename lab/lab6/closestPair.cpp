@@ -14,7 +14,8 @@
 
 #define DEBUG 0 // NOTE: Will slow down output considerably, DO NOT USE FOR LARGE DATASETS!!!
 #define PRINT_GRID 0
-#define VISUAL_GRID 0
+#define NUMBER_GRID 1
+#define VISUAL_GRID 1
 
 using namespace std;
 
@@ -30,7 +31,7 @@ auto calcDistance(const point& a, const point& b) {
     return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 }
 
-// Helper function to print the entire grid
+// Function to print the entire grid as text
 void printGrid(const vector<vector<vector<point>>>& grid) {
     int b = grid.size();
     cout << "Grid contents:" << endl;
@@ -45,9 +46,28 @@ void printGrid(const vector<vector<vector<point>>>& grid) {
     }
 }
 
+// Function to print the entire grid in 2D form, with numbers per grid square
+void numericGrid(const vector<vector<vector<point>>>& grid) {
+    int b = grid.size();
+    cout << "Numerical representation of the grid (each cell shows number of points):" << endl;
+
+    // Iterate through each cell and print the number of points in the cell
+    for (int i = 0; i < b; i++) {
+        for (int j = 0; j < b; j++) {
+            int numPointsInCell = grid[i][j].size();
+
+            // Print the number of points in the current cell, using setw for consistent spacing
+            cout << setw(1) << numPointsInCell << " ";
+        }
+        cout << endl; // Newline for each row
+    }
+    cout << endl;
+}
+
+// Function to print the entire grid in 2D form, with visual/symbolic representation
 void visualizeGrid(const vector<vector<vector<point>>>& grid, int numPoints) {
     int b = grid.size();
-    cout << "Visual repersentation of the grid (each cell shows number of points):" << endl;
+    cout << "Visual representation of the grid (each cell shows symbol of points):" << endl;
 
     // Determine density thresholds
     // TODO: Figure out best scaling algorithm for this!
@@ -129,6 +149,7 @@ double closestPair(string filename) {
     file.close();
 
     if (PRINT_GRID) printGrid(grid);
+    if (NUMBER_GRID) numericGrid(grid);
     if (VISUAL_GRID) visualizeGrid(grid, n);
 
     // Start the min distance at infinity so it can only go down from here
@@ -172,7 +193,7 @@ double closestPair(string filename) {
     return minDistance;
 }
 
-/*
+
 int main()
 {
     double min;
@@ -184,4 +205,3 @@ int main()
     cout << "Distance between closest pair of points: " << min << endl;
     return 0;
 }
-*/
