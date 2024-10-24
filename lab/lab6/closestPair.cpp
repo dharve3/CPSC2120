@@ -4,6 +4,8 @@
  * Lab Section: 005
  * Assignment Name: Lab 6: Finding the Closest Pair of Points
  */
+// NOTE: I added some cool additions to this all toggleable with the define directives below, 
+// when set to 0 the code runs as normal and passes all tests!
 
 #include <iostream>
 #include <iomanip>
@@ -12,11 +14,13 @@
 #include <cmath>
 #include <limits>
 
-// NOTE: Will slow down output considerably, NOT RECCOMENDED FOR LARGE DATASETS!!!
-#define DEBUG 0 
-#define PRINT_GRID 0
-#define NUMBER_GRID 0
-#define VISUAL_GRID 0
+// NOTE: May slow down output considerably, NOT RECCOMENDED FOR LARGE DATASETS!!!
+#define DEBUG 0 // Shows debug data in statements throughout the program
+#define PRINT_GRID 0 // Prints the grid data as text
+#define NUMBER_GRID 0 // Prints a 2D representation of the grid numerically
+#define VISUAL_GRID 0 // Prints a 2D representation of the grid symbolically (much easier to see), 
+                        // doesn't scale super well with small datasets, trying to figure out a better formula for the symbol thresholds
+// Note: I wish I had more point sets going 10, 100, 250k doesnt leave much room to showcase these lol, might generate a 1k or a 10k at some point.
 
 using namespace std;
 
@@ -100,7 +104,7 @@ void visualizeGrid(const vector<vector<vector<point>>>& grid, int numPoints) {
     // Note: x/sqrt(x) = sqrt(x)
     // sqrt(x) = b (but b is rounded normally)
     double maxPointsPerCell = static_cast<double>(sqrt(numPoints));
-    if (DEBUG) cout << "DEBUG: maxPointsPerCell = " << maxPointsPerCell << endl;
+    if (DEBUG) cout << "DEBUG: maxPointsPerCell: " << maxPointsPerCell << endl;
 
     int lowThreshold = static_cast<int>(maxPointsPerCell * 0.25);
     int midThreshold = static_cast<int>(maxPointsPerCell * 0.50);
@@ -219,6 +223,7 @@ double closestPair(string filename) {
     return minDistance;
 }
 
+// COMMENT OUT MAIN IF SUBMITTING!
 /*
 int main()
 {
