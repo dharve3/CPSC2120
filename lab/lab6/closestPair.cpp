@@ -15,8 +15,8 @@
 // NOTE: Will slow down output considerably, NOT RECCOMENDED FOR LARGE DATASETS!!!
 #define DEBUG 0 
 #define PRINT_GRID 0
-#define NUMBER_GRID 1
-#define VISUAL_GRID 1
+#define NUMBER_GRID 0
+#define VISUAL_GRID 0
 
 using namespace std;
 
@@ -219,7 +219,7 @@ double closestPair(string filename) {
     return minDistance;
 }
 
-
+/*
 int main()
 {
     double min;
@@ -231,3 +231,4 @@ int main()
     cout << "Distance between closest pair of points: " << min << endl;
     return 0;
 }
+*/
