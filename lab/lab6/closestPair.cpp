@@ -12,7 +12,9 @@
 #include <cmath>
 #include <limits>
 
-#define DEBUG 1
+#define DEBUG 0 // NOTE: Will slow down output considerably, DO NOT USE FOR LARGE DATASETS!!!
+#define PRINT_GRID 1
+#define VISUAL_GRID 1
 
 using namespace std;
 
@@ -28,7 +30,7 @@ auto calcDistance(const point& a, const point& b) {
     return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 }
 
-// Helper function to print the entire grid (DONT TRY TO USE FOR 250K!!!)
+// Helper function to print the entire grid
 void printGrid(const vector<vector<vector<point>>>& grid) {
     int b = grid.size();
     cout << "Grid contents:" << endl;
@@ -41,6 +43,34 @@ void printGrid(const vector<vector<vector<point>>>& grid) {
             cout << endl;
         }
     }
+}
+
+void visualizeGrid(const vector<vector<vector<point>>>& grid) {
+    int b = grid.size();
+    cout << "Visual repersentation of the grid (each cell shows number of points):" << endl;
+
+    // Go through each cell and print its "density" (number of points in it)
+    for (int i = 0; i < b; i++) {
+        for (int j = 0; j < b; j++) {
+            int numPoints = grid[i][j].size();
+
+            // Choose a char based on the number of points in the cell
+            char representation;
+            if (numPoints == 0) {
+                representation = '.'; // Empty cell
+            } else if (numPoints < 3) {
+                representation = 'o'; // Few points
+            } else if (numPoints < 6) {
+                representation = 'O'; // Some points
+            } else {
+                representation = '#'; // Many points
+            }
+
+            cout << representation << " ";
+        }
+        cout << endl; // Newline for each row
+    }
+    cout << endl;
 }
 
 /*Implement the following function
@@ -85,7 +115,8 @@ double closestPair(string filename) {
 
     file.close();
 
-    if (DEBUG) printGrid(grid);
+    if (PRINT_GRID) printGrid(grid);
+    if (VISUAL_GRID) visualizeGrid(grid);
 
     // Start the min distance at infinity so it can only go down from here
     double minDistance = numeric_limits<double>::infinity();
@@ -122,6 +153,8 @@ double closestPair(string filename) {
             }
         }
     }
+
+    if (DEBUG) cout << "Final minimum distance: " << minDistance << endl;
 
     return minDistance;
 }
