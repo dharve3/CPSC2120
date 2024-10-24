@@ -10,6 +10,9 @@
 #include <fstream>
 #include <vector>
 #include <cmath>
+#include <limits>
+
+#define DEBUG 1
 
 using namespace std;
 
@@ -23,6 +26,21 @@ struct point
 // May condense into closestPair at some point
 auto calcDistance(const point& a, const point& b) {
     return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+}
+
+// Helper function to print the entire grid (DONT TRY TO USE FOR 250K!!!)
+void printGrid(const vector<vector<vector<point>>>& grid) {
+    int b = grid.size();
+    cout << "Grid contents:" << endl;
+    for (int i = 0; i < b; i++) {
+        for (int j = 0; j < b; j++) {
+            cout << "Cell (" << i << ", " << j << "): ";
+            for (const point& p : grid[i][j]) {
+                cout << "(" << p.x << ", " << p.y << ") ";
+            }
+            cout << endl;
+        }
+    }
 }
 
 /*Implement the following function
@@ -45,9 +63,11 @@ double closestPair(string filename) {
 
     int n;
     file >> n; // Number of points
+    if (DEBUG) cout << "Number of points: " << n << endl;
 
     // Calculate b (using sqrt of n)
     int b = static_cast<int>(sqrt(n));
+    if (DEBUG) cout << "Grid size (b x b): " << b << "x" << b << endl;
 
     // 2D Vector of size b x b (triple vector)
     vector<vector<vector<point>>> grid(b, vector<vector<point>>(b));
@@ -59,9 +79,13 @@ double closestPair(string filename) {
         int cellX = static_cast<int>(p.x * b);
         int cellY = static_cast<int>(p.y * b);
         grid[cellX][cellY].push_back(p);
+
+        if (DEBUG) cout << "Point " << i + 1 << ": (" << p.x << ", " << p.y << ") placed in cell (" << cellX << ", " << cellY << ")" << endl;
     }
 
     file.close();
+
+    if (DEBUG) printGrid(grid);
 
     // Start the min distance at infinity so it can only go down from here
     double minDistance = numeric_limits<double>::infinity();
@@ -85,11 +109,14 @@ double closestPair(string filename) {
                             if (&p1 == &p2) continue; // Don't compare same point
                             double dist = calcDistance(p1, p2);
 
+                            if (DEBUG) cout << "Comparing Point (" << p1.x << ", " << p1.y << ") with Point (" << p2.x << ", " << p2.y << "), Distance: " << dist << endl;
+
                             if (dist < minDistance) {
                                 minDistance = dist;
+
+                                if (DEBUG) cout << "New minimum distance found: " << minDistance << endl;
                             }
                         }
-
                     }
                 }
             }
@@ -99,14 +126,15 @@ double closestPair(string filename) {
     return minDistance;
 }
 
-// int main()
-// {
-//     double min;
-//     string filename;
-//     cout << "File with list of points within unit square: ";
-//     cin >> filename;
-//     min = closestPair(filename);
-//     cout << setprecision(16);
-//     cout << "Distance between closest pair of points: " << min << endl;
-//     return 0;
-// }
+
+int main()
+{
+    double min;
+    string filename;
+    cout << "File with list of points within unit square: ";
+    cin >> filename;
+    min = closestPair(filename);
+    cout << setprecision(16);
+    cout << "Distance between closest pair of points: " << min << endl;
+    return 0;
+}
